@@ -3,54 +3,49 @@ import './App.css'
 function App() {
   return (
     <div className="delivery-container">
-      {/* Futuristic grid background */}
-      <div className="grid-overlay"></div>
-      
-      {/* Floating particles */}
-      <div className="particle particle-1"></div>
-      <div className="particle particle-2"></div>
-      <div className="particle particle-3"></div>
-      <div className="particle particle-4"></div>
-      <div className="particle particle-5"></div>
-      <div className="particle particle-6"></div>
-      
-      {/* Decorative circles */}
-      <div className="circle circle-1"></div>
-      <div className="circle circle-2"></div>
-      <div className="circle circle-3"></div>
-      <div className="circle circle-4"></div>
-      <div className="circle circle-5"></div>
-      
+      {/* Background shapes */}
+      <div className="background-shapes">
+        <div className="shape shape-1"></div>
+        <div className="shape shape-2"></div>
+        <div className="shape shape-3"></div>
+        <div className="floating-dots">
+          <div className="dot dot-1"></div>
+          <div className="dot dot-2"></div>
+          <div className="dot dot-3"></div>
+        </div>
+      </div>
+
       <div className="content-wrapper">
-        <div className="text-section">
+        <div className="left-section">
           <div className="brand">
-            <span className="rocket-icon">🚀</span>
-            <span className="brand-name">ARROWAI</span>
+            <span className="brand-icon">🚀</span>
+            <span className="brand-name">OrbiTrack</span>
           </div>
-          
+
           <h1 className="main-title">
-            <span className="delivery-text">DELIVERY</span>
-            <span className="express-text">EXPRESS</span>
+            <div className="title-line">Delivery</div>
+            <div className="title-line">Express</div>
           </h1>
-          
+
           <p className="subtitle">
-            FAST, RELIABLE, AND EFFICIENT<br />
-            NEXT-GEN SHIPPING SOLUTIONS
+            Fast, Reliable, and Efficient<br />
+            Shipping
           </p>
-          
-          <button className="explore-btn">
-            EXPLORE MORE
+
+          <button className="explore-button">
+            Pruébalo ahora
           </button>
         </div>
-        
-        <div className="image-section">
-          <div className="hologram-effect"></div>
-          <div className="scooter-container">
-            <div className="delivery-scooter">
-              🛵
-            </div>
-            <div className="package">
-              📦
+
+        <div className="right-section">
+          <div className="illustration">
+            <div className="scooter-container">
+              <div className="package">
+                <div className="package-shadow"></div>
+              </div>
+              <div className="scooter">
+                <div className="scooter-shadow"></div>
+              </div>
             </div>
           </div>
         </div>
