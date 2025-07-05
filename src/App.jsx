@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import './App.css'
 import packageIcon1 from './assets/package-svgrepo-com.svg'
+import Map from './Map'
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState('home')
+  const [routeStops, setRouteStops] = useState(0)
 
   const handleExploreClick = () => {
     setCurrentScreen('calculator')
@@ -11,6 +14,15 @@ function App() {
 
   const handleBackClick = () => {
     setCurrentScreen('home')
+    setRouteStops(0);
+  }
+
+  const handleCalculateClick = () => {
+    const input = document.querySelector('.route-input');
+    const value = parseInt(input.value, 0);
+    if (!isNaN(value)) {
+      setRouteStops(value);
+    }
   }
 
   return (
@@ -74,7 +86,7 @@ function App() {
                 className="route-input" 
                 placeholder="Ingresa el número de paradas"
               />
-              <button className="calculate-button">
+              <button className="calculate-button" onClick={handleCalculateClick}>
                 Calcular Ruta Óptima
               </button>
             </div>
@@ -82,7 +94,7 @@ function App() {
           
           <div className="result-section">
             <div className="route-display">
-              {/* Aquí se mostrará el mapa o la ruta */}
+              {routeStops !== 0 ? <Map numeroNodos={routeStops} /> : <div className="no-route-message">Ingresa el número de paradas para calcular la ruta</div>}
             </div>
           </div>
         </div>
