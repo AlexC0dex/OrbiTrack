@@ -48,6 +48,56 @@ export default function Map({ numeroNodos }) {
     }
   }, [nodes]);
 
+
+
+  function dijkstra(graph, start) {
+    // Initialize distances and previous nodes
+    const dist = {},
+      prev = {},
+      vis = {};
+    Object.keys(graph).forEach((node) => {
+      dist[node] = Infinity;
+      prev[node] = null;
+      vis[node] = false;
+    });
+
+    dist[start] = 0;
+    const queue = [[0, start]]; // Inicializamos la cola con el nodo de inicio [distance, node]
+
+    while (queue.length) {
+      // Ordenamos la cola
+      queue.sort((a, b) => a[0] - b[0]);
+      const [_, u] = queue.shift(); //Obtenemos el primer elemento despues de ordenado
+      vis[u] = true; // Marcamos este nodo como ya visitado
+
+      graph[u].forEach(([v, w]) => {
+        if (dist[u] + w < dist[v] && !vis[v]) {
+          dist[v] = dist[u] + w;
+          prev[v] = u;
+          queue.push([dist[v], v]);
+        }
+      });
+    }
+
+    return { dist, prev };
+  }
+
+  function reconstructPath(prev, start, end) {
+    const path = [];
+    let curr = end;
+
+    while (curr !== null) {
+      path.push(curr);
+      if (curr === start) break; // Si llegamos al nodo de inicio finalizamos
+      curr = prev[curr];
+    }
+
+    return path.reverse(); // Invertimos el camino ya que esta del final hacia el inicio
+  }
+
+
+
+
   // Algoritmo de Held-Karp para el problema del agente viajero (TPS)
   useEffect(() => {
     if (!Object.keys(graph).length) return;
@@ -70,14 +120,13 @@ export default function Map({ numeroNodos }) {
 
       // Precalculamos las distancias entre los nodos usando Dijkstra y lo colocamos en una matriz
       const distMatrix = nodesList.map((u) => {
-        /*const { dist, prev } = dijkstra(graph, u);
+        const { dist, prev } = dijkstra(graph, u);
         // Guardamos tambien el path para no recalcularlo despues
         return nodesList.map((v) =>
           dist[v] === Infinity
             ? [Infinity, []]
             : [dist[v], reconstructPath(prev, u, v)]
-        );*/ //Descomentar cuando ya se tenga dijkstra y reconstructPath
-        return u; //eliminar cuando ya se tengan las otras funciones
+        );
       });
 
       const ALL = 1 << n; // 2^n todas los subconjuntos de nodos
