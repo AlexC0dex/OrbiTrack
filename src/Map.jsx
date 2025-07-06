@@ -101,7 +101,7 @@ export default function Map({ numeroNodos }) {
   // Algoritmo de Held-Karp para el problema del agente viajero (TPS)
   useEffect(() => {
     if (!Object.keys(graph).length) return;
-    const startNode = 38455; // Nodo de inicio en la UPC :v
+    const startNode = 258920; // Nodo de inicio en la UPC :v
 
     const availNodes = Object.keys(graph)
       .map((n) => Number(n)) // <-- aquí
