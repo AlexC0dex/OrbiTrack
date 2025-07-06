@@ -83,6 +83,8 @@ function App() {
             <div className="calculator-controls">
               <input 
                 type="number" 
+                min={0}
+                max={20}
                 className="route-input" 
                 placeholder="Ingresa el número de paradas"
               />
