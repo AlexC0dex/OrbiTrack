@@ -204,10 +204,147 @@ export default function Map({ numeroNodos }) {
     tpsHeldKarp(graph, nodeList, startNode);
   }, [nodes, graph, numeroNodos]);
 
+
+  const LoadingScreen = () => (
+    <div
+      style={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f5f5f5",
+      }}
+    >
+      <div
+        style={{
+          padding: "20px",
+          borderRadius: "10px",
+          backgroundColor: "white",
+          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            marginBottom: "20px",
+            fontSize: "20px",
+            fontWeight: "bold",
+            color: "#333",
+          }}
+        >
+          Calculando rutas óptimas
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "10px",
+          }}
+        >
+          <div className="loading-dots">
+            <div
+              style={{
+                backgroundImage: "url('/assets/package-svgrepo-com.svg')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                height: "25px",
+                width: "25px",
+                display: "inline-block",
+                margin: "0 5px",
+                animation: "loadingDot 1.5s infinite ease-in-out",
+              }}
+            ></div>
+            <div
+              style={{
+                backgroundImage: "url('/assets/package-svgrepo-com.svg')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                height: "25px",
+                width: "25px",
+                display: "inline-block",
+                margin: "0 5px",
+                animation: "loadingDot 1.5s infinite ease-in-out 0.3s",
+              }}
+            ></div>
+            <div
+              style={{
+                backgroundImage: "url('/assets/package-svgrepo-com.svg')",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                height: "25px",
+                width: "25px",
+                display: "inline-block",
+                margin: "0 5px",
+                animation: "loadingDot 1.5s infinite ease-in-out 0.6s",
+              }}
+            ></div>
+          </div>
+        </div>
+        <p style={{ color: "#666", fontSize: "14px" }}>
+          Esto puede tomar unos segundos dependiendo del número de nodos
+        </p>
+      </div>
+      <style jsx="true">{`
+        @keyframes loadingDot {
+          0%,
+          100% {
+            transform: scale(0.7);
+            opacity: 0.7;
+          }
+          50% {
+            transform: scale(1.2);
+            opacity: 1;
+          }
+        }
+      `}</style>
+    </div>
+  );
+
+  if (!selectedNode[0]) {
+    return <LoadingScreen />;
+  }
+
+  if (isRouteCalculating) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <>
-     {//Aca ira el mapa renderizado con los nodos y las rutas
-     }
-    </>
-  )
+    <MapContainer
+      center={[selectedNode[0].lat, selectedNode[0].lon]}
+      zoom={12}
+      style={{ height: "100%", width: "100%" }}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {
+        // marcadores
+        selectedNode.map((node, i) => (
+          <CircleMarker
+            key={i}
+            center={[node.lat, node.lon]}
+            radius={6}
+            pathOptions={
+              node.id === selectedNode[0].id
+                ? { color: "red" }
+                : { color: "blue" }
+            }
+          />
+        ))
+      }
+      {
+        // líneas
+        tourEdges.map((seg, i) => (
+          <Polyline
+            key={i}
+            positions={seg}
+            pathOptions={{ weight: 3, opacity: 0.7, color: "green" }}
+          />
+        ))
+      }
+    </MapContainer>
+  );
 }
