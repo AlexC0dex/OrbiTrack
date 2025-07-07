@@ -70,6 +70,8 @@
 
 > 🌐 Conexión **NO** requerida para el uso local.
 
+> 🌐 Desplegado: Abre [https://alexc0dex.github.io/OrbiTrack/](https://alexc0dex.github.io/OrbiTrack/) en tu navegador.
+
 ---
 
 ## 🚀 Instalación rápida
